@@ -1,0 +1,52 @@
+from django.db import models
+from django.forms import ModelForm,Form
+from django import forms
+from django.utils.translation import ugettext_lazy as _
+
+
+
+# Create your models here.
+
+class Kuadrilla (models.Model):
+    lagun_kopurua = models.IntegerField()
+    def __str__(self):
+        return str(self.id)
+
+class Laguna (models.Model):
+    kuadri = models.ForeignKey(Kuadrilla, on_delete=models.CASCADE)
+    izena = models.CharField(max_length = 200)
+    eposta = models.EmailField()
+    lagun_ezk = models.ForeignKey("Laguna")
+
+# class KuadrillaForm(ModelForm):
+#     class Meta:
+#         model = Kuadrilla
+#         fields = ["lagun_kopurua"]
+#         labels = {'lagun_kopurua': _("Zenbat lagun zarete?"),}
+
+class LagunaForm(Form):
+    # izena = forms.CharField()
+    # eposta = forms.EmailField()
+
+    def __init__(self, *args, **kwargs):
+        extra = kwargs.pop('extra')
+        super(LagunaForm, self).__init__(*args, **kwargs)
+
+        for i in range(0,extra):
+            self.fields['izena_%s' % i] = forms.CharField()
+            self.fields['eposta_%s' % i] = forms.EmailField()
+
+    def extra_lagunak(self):
+        for name, value in self.cleaned_data.items():
+            if name.startswith('izena_') or name.startswith('eposta'):
+                yield (self.fields[name].label, value)
+#     # class Meta:
+#     #     model = Laguna
+#     #     fields = ["izena","eposta"]
+
+#     def __init__(self, *args, **kwargs):
+#         super(LagunaForm, self).__init__(*args, **kwargs)
+
+#         for i in range(0, 10):
+#             self.fields['izena_field_%d' % i] = forms.CharField()
+#             self.fields['eposta_field_%d' % i] = forms.CharField()
