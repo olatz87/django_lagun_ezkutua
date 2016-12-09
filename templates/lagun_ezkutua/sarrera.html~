@@ -1,7 +1,0 @@
-
-<h1>Lagun ezkutua</h1>
-<form method="post" action="">
-{% csrf_token %}
-  {{ formset }}
-<input type="submit" value="Bidali">
-</form>
