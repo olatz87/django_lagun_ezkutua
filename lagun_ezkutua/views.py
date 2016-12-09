@@ -50,7 +50,7 @@ def izenak(request,kuadrilla_id):
             l = Laguna(kuadri=k,izena=laguna,eposta=eposta,lagun_ezk=zoz[laguna])
             l.save()
             hiztegia[laguna] = (eposta,zoz[laguna])
-        #epostak_bidali(hiztegia)
+        epostak_bidali(hiztegia)
         return HttpResponseRedirect('/'+str(kuadrilla_id)+'/emaitza/')
     return render(request, 'lagun_ezkutua/izenak.html', {'form':form})
 
