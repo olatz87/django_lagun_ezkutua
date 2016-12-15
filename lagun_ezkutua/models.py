@@ -2,13 +2,16 @@ from django.db import models
 from django.forms import ModelForm,Form
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-
-
+from django.forms.extras import SelectDateWidget
+import datetime
+#from  django.contrib.admin.widgets import AdminDateWidget
 
 # Create your models here.
 
 class Kuadrilla (models.Model):
     lagun_kopurua = models.IntegerField()
+    data = models.DateField(null=True,default = datetime.date.today())
+    dirua = models.IntegerField()
     def __str__(self):
         return str(self.id)
 
@@ -21,8 +24,10 @@ class Laguna (models.Model):
 class KuadrillaForm(ModelForm):
     class Meta:
         model = Kuadrilla
-        fields = ["lagun_kopurua"]
-        labels = {'lagun_kopurua': _("Zenbat lagun zarete?"),}
+        fields = ["lagun_kopurua","data","dirua"]
+        labels = {'lagun_kopurua': _("Zenbat lagun zarete?"),"data":_("Noiz egingo da opari banaketa?"),"dirua":_("Zenbat diru?"),}
+        widgets = {"data":SelectDateWidget()}
+
 
 class LagunaForm(Form):
     # izena = forms.CharField()

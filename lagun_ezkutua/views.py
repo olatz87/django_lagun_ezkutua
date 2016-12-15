@@ -16,12 +16,12 @@ def index(request):
         return HttpResponseRedirect(str(instances.id)+'/izenak/')
     return render(request, 'lagun_ezkutua/sarrera.html', {'form':form})
 
-def epostak_bidali(hiztegia):
+def epostak_bidali(hiztegia,kuadrilla):
     for izena in hiztegia:
         
         send_mail(
             'Lagun ezkutuko laguna',
-            'Kaixo '+izena+', aurtengo lagun ezkutuan '+hiztegia[izena][1]+' lagunari egin behar diozu oparia. Ondo izan.',
+            'Kaixo '+izena+', aurtengo lagun ezkutuan '+hiztegia[izena][1]+' lagunari egin behar diozu oparia.\n Epemuga: '+str(kuadrilla.data)+'\nDiru kopurua'+str(kuadrilla.dirua)+'.\n Ondo izan.',
             'lagunezkutua.python@gmail.com',
             [hiztegia[izena][0]],
             fail_silently=False,
@@ -50,7 +50,7 @@ def izenak(request,kuadrilla_id):
             l = Laguna(kuadri=k,izena=laguna,eposta=eposta,lagun_ezk=zoz[laguna])
             l.save()
             hiztegia[laguna] = (eposta,zoz[laguna])
-        epostak_bidali(hiztegia)
+        epostak_bidali(hiztegia,k)
         return HttpResponseRedirect('/'+str(kuadrilla_id)+'/emaitza/')
     return render(request, 'lagun_ezkutua/izenak.html', {'form':form})
 

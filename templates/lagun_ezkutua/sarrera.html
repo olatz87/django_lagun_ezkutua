@@ -2,6 +2,8 @@
 <h1>Lagun ezkutua</h1>
 <form method="post" action="">
 {% csrf_token %}
-  {{ form }}
+{{ form.lagun_kopurua.label_tag }}  {{ form.lagun_kopurua }} <br/>
+{{ form.data.label_tag }}  {{ form.data }} <br/>
+ {{ form.dirua.label_tag }} {{ form.dirua }} <br/>
 <input type="submit" value="Bidali">
 </form>
