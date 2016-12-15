@@ -21,7 +21,7 @@ def epostak_bidali(hiztegia,kuadrilla):
         
         send_mail(
             'Lagun ezkutuko laguna',
-            'Kaixo '+izena+', aurtengo lagun ezkutuan '+hiztegia[izena][1]+' lagunari egin behar diozu oparia.\n Epemuga: '+str(kuadrilla.data)+'\nDiru kopurua'+str(kuadrilla.dirua)+'.\n Ondo izan.',
+            'Kaixo '+izena+', aurtengo lagun ezkutuan '+hiztegia[izena][1]+' lagunari egin behar diozu oparia.\n Epe-muga: '+str(kuadrilla.data)+'\nDiru kopurua: '+str(kuadrilla.dirua)+'€\n Ondo izan.',
             'lagunezkutua.python@gmail.com',
             [hiztegia[izena][0]],
             fail_silently=False,
